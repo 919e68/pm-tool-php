@@ -3,7 +3,7 @@ if (!defined('DS')) {
   define('DS', DIRECTORY_SEPARATOR);
 }
 
-define('CAKE_CORE_INCLUDE_PATH', 'C:\wamp64\www\lib');
+define('CAKE_CORE_INCLUDE_PATH', 'C:\wamp\www\lib');
 
 if (!defined('ROOT')) {
   define('ROOT', dirname(dirname(dirname(__FILE__))));

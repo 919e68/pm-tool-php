@@ -27,7 +27,7 @@
 
   Router::connect('/projects', [
     'controller' => 'main', 
-    'action'     => 'projects'
+    'action'     => 'index'
   ]);
 
   // for testing only
@@ -44,7 +44,7 @@
 
 
 
-  $apiRoutes = ['register', 'signin', 'projects', 'members', 'tasks', 'comments'];
+  $apiRoutes = ['register', 'signin', 'projects', 'members', 'tasks', 'comments', 'profile'];
   Router::mapResources($apiRoutes, array('prefix' => 'api'));
 	Router::parseExtensions('json');
   

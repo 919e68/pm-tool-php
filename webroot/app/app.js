@@ -1,11 +1,18 @@
-var app = angular.module('pm-tool', ['ngResource', 'ngRoute', 'ngSanitize']);
+var app = angular.module('pm-tool', ['ngResource', 'ui.router'])
 
-app.config(function($routeProvider) {
-  $routeProvider
-  .otherwise({
-    redirectTo: '/dashboard'
-  });
-});
+app.config(function($urlRouterProvider, $locationProvider) {
+
+  $urlRouterProvider.otherwise(base)
+  $locationProvider.html5Mode(true)
+
+})
+
+function url(str) {
+  return base + str
+}
+function templateUrl(str) {
+  return base + 'app/' + str
+}
 
 
 

@@ -1,11 +1,16 @@
-app.config(function($routeProvider, $locationProvider) {
-  $routeProvider
-  .when('/projects', {
-    templateUrl: base + '/app/projects/_index.html',
-    controller: 'ProjectController',
-  })
-  .when('/projects/:slug', {
-    templateUrl: base + '/app/projects/_view.html',
-    controller: 'ProjectViewController',
-  });
-});
+app.config(function($stateProvider) { 
+  $stateProvider
+    .state('projects', {
+      url: url('projects'),
+      views: {
+        '': {
+          templateUrl: templateUrl('projects/_index.html'),
+          controller: 'ProjectController'
+        },
+        'left@projects': { 
+          templateUrl: templateUrl('partials/_left.html'),
+          controller: 'LeftController'
+        }
+      }
+    })
+})
