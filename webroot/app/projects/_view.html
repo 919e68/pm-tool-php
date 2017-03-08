@@ -1,0 +1,347 @@
+<div class="ui indicating progress" data-value="{{ project.DoneTask }}" data-total="{{ project.TotalTask }}" data-percent="{{ project.Progress }}" id="project-progress">
+  <div class="bar">
+    <div class="progress"></div>
+  </div>
+  <div class="label">PROJECT PROGRESS</div>
+</div>
+
+<div class="ui menu tab-menu">
+  <a class="active item" data-tab="messages"><i class="mail icon"></i> Messages</a>
+  <a class="item" data-tab="members"><i class="spy icon"></i> Members</a>
+  <a class="item" data-tab="tasks"><i class="tasks icon"></i> Tasks</a>
+  <a class="item" data-tab="logs"><i class="archive icon"></i> Logs</a>
+  <a class="item"><i class="settings icon"></i> Settings</a>
+  
+  <div class="right menu">
+    <div class="item">
+      <div class="ui transparent icon input">
+        <input type="text" placeholder="Search...">
+        <i class="search link icon"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- messages tab -->
+<div class="ui bottom attached active tab segment top" data-tab="messages">
+  <div class="ui threaded comments">
+    
+    <!-- send message -->
+    <div class="ui reply form">
+      <div class="field">
+        <textarea ng-model="newmessage.ProjectMessage.message" placeholder="Type your message here .." id="message-area"></textarea>
+      </div>
+      <button class="ui blue button pull-right" ng-click="sendMessage()">
+        <i class="send outline icon"></i> Send Message
+      </button>
+    </div>
+    <!-- .send message -->
+    
+    <div class="clearfix"></div>
+    <div class="ui divider"></div>
+    
+    <!-- message lists -->
+    <div class="project-message-container" id="project-messages-container-{{ project_id }}">
+      <div class="comment" ng-repeat="message in project.Message">
+        <a class="avatar">
+          <img ng-src="{{ message.image }}">
+        </a>
+        <div class="content">
+          <a class="author">{{ message.name }}</a>
+          <div class="metadata">
+            <span class="date">{{ message.created|fromNow }}</span>
+          </div>
+          <div class="text" ng-bind-html="message.message"></div>
+        </div>
+      </div>
+    </div>
+    <!-- .message lists -->
+  </div>
+</div>
+<!-- .messages tab -->
+
+
+<!-- members tab -->
+<div class="ui bottom attached tab segment top" data-tab="members">
+  <div class="ui very relaxed list">
+    <div class="item" ng-repeat="member in project.Member" data-project-member-id="{{ member.id }}">
+      <img class="ui avatar image" ng-src="{{ member.image }}">
+      <div class="content">
+        <a class="header" ng-click="editMember(member)">{{ member.name }}</a>
+        <div class="description">{{ member.role }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="ui divider"></div>
+  <button class="small ui green button" ng-click="addMember()"><i class="plus icon"></i> Add Member</button>
+</div>
+<!-- .members tab -->
+
+
+<!-- tasks tab -->
+<div class="ui bottom attached tab segment top" data-tab="tasks">
+  <button class="small ui green right labeled icon button" ng-click="addTask()">New Task <i class="plus icon"></i></button>
+  <div class="ui divider"></div>
+  <div class="ui threaded comments" id="project-tasks-container">
+    <div ng-repeat="task in project.Task" class="comment" data-project-task-id="{{task.id}}" data-project-task-index="{{$index}}">
+      <a class="avatar">
+        <img ng-src="/pm-tool/assets/dummy/elliot.jpg">
+      </a>
+      <div class="content">
+        <span class="author">{{ task.assigned_to }}</span>
+        <div class="metadata">
+          <span class="date">
+            <a class="ui red tag mini label" ng-if="task.status != 'Done' && task.due_date != null">{{ task.due_date }}</a>
+            <a class="ui green tag mini label" ng-if="task.status == 'Done'">Done</a>
+            <a class="ui blue tag mini label" ng-if="task.status == 'In progress'">In Progress</a>
+            <a class="ui blue tag mini label" ng-if="task.status == 'Testing'">Testing</a>
+          </span>
+        </div>
+        <div class="text">
+          <p><a href="javascript:void(0)" ng-click="viewTask(task)">({{ task.code }})</a> - <i>{{ task.name }}</i> <span ng-if="task.description != null"> - {{ task.description }}</span></p>
+        </div>
+      </div>
+      <div class="comments">
+        <div ng-repeat="sub in task.SubTask" class="comment" data-project-task-id="{{sub.id}}" data-project-task-index="{{$index}}">
+          <a class="avatar">
+            <img ng-src="{{ sub.image }}">
+          </a>
+          <div class="content">
+            <span class="author">{{ sub.assigned_to }}</span>
+            <div class="metadata">
+              <span class="date">
+                <a class="ui red tag mini label" ng-if="sub.status != 'Done' && sub.due_date != null">{{ sub.due_date }}</a>
+                <a class="ui green tag mini label" ng-if="sub.status == 'Done'">Done</a>
+                <a class="ui blue tag mini label" ng-if="sub.status == 'In progress'">In Progress</a>
+                <a class="ui blue tag mini label" ng-if="sub.status == 'Testing'">Testing</a>
+              </span>
+            </div>
+            <div class="text">
+              <p><a href="javascript:void(0)" ng-click="viewTask(sub)">({{ sub.code }})</a> - <i>{{ sub.name }}</i> <span ng-if="sub.description != null"> - {{ sub.description }}</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- .tasks tab -->
+
+
+<!-- logs tab -->
+<div class="ui bottom attached tab segment top" data-tab="logs">
+
+</div>
+<!-- .logs tab -->
+
+
+<!-- add member modal -->
+<div class="ui small modal" id="add-member">
+  <i class="close icon"></i>
+  <div class="header">
+    Add Member
+  </div>
+  <div class="content">
+    <div class="ui form">
+      <div class="field">
+        <label>Member</label>
+        <div class="ui selection dropdown aprojectmember-member_id">
+          <input type="hidden" name="gender">
+          <div class="text">Select Member</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div ng-repeat="member in project.MemberSelection"  data-value="{{member.id}}" class="item" ng-click="select('$scope.aprojectmember.ProjectMember.member_id', member.id)">
+              {{ member.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Role</label>
+        <input type="text" placeholder="Role" ng-model="aprojectmember.ProjectMember.role">
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui right labeled icon red button">Cancel <i class="remove icon"></i></div>
+    <div class="ui green right labeled icon button" ng-click="saveAddMember()">
+      Add Member
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
+</div>
+<!-- .add member modal -->
+
+
+<!-- edit member modal -->
+<div class="ui small modal" id="edit-member">
+  <i class="close icon"></i>
+  <div class="header">
+    View Member
+  </div>
+  <div class="content">
+    <div class="ui form">
+      <div class="field">
+        <label>Member</label>
+        <input type="text" readonly="readonly" ng-model="emember.name">
+      </div>
+      <div class="field">
+        <label>Role</label>
+        <input type="text" placeholder="Role" ng-model="emember.role">
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui red right labeled icon button deny">Delete<i class="remove icon"></i></div>
+    <div class="ui green right labeled icon button approve">
+      Update<i class="checkmark icon"></i>
+    </div>
+  </div>
+</div>
+<!-- .edit member modal -->
+
+
+<!-- view task modal -->
+<div class="ui small modal" id="view-task">
+  <i class="close icon"></i>
+  <div class="header">
+    View Task
+  </div>
+  <div class="content">
+    <div class="ui form">
+      <div class="field">
+        <label>Assign To</label>
+        <select class="ui dropdown member-dropdown vtask-member" ng-model="utask.member_id" ng-options="member.member_id as member.name for member in project.Member">
+          <option value="">Select Member</option>
+        </select>
+      </div>
+      <div class="required field">
+        <label>Task Name</label>
+        <input type="text" placeholder="Task Name" ng-model="utask.name">
+      </div>
+      <div class="field">
+        <label>Task Description</label>
+        <textarea type="text" placeholder="Description" ng-model="utask.description" style="height:1em"></textarea>
+      </div>
+      <div class="two fields">
+       
+        <div class="field">
+          <label>Due Date</label>
+          <input type="date" placeholder="Due Date" class="vtask-date" ng-model="utask.due_date" style="padding:7px">
+        </div>
+
+        <div class="field">
+          <label>Status</label>
+          <div class="ui selection dropdown vtask-status">
+            <input type="hidden" name="gender">
+            <div class="text">{{ utask.status }}</div>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+              <div data-value="{{status}}" class="item" ng-repeat="status in taskstatus" ng-click="select('$scope.utask.status', status)">
+                {{ status }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui red right labeled icon button approve" ng-click="deleteTask(dtask)">Delete<i class="trash outline icon"></i></div>
+    <div class="ui blue right labeled icon button approve" ng-click="addSubTask(vtask)" ng-if="vtask.parent == null">Add Sub <i class="plus icon"></i></div>
+    <button class="ui green right labeled icon button approve" ng-click="updateTask(vtask)">
+      Update <i class="checkmark icon"></i>
+    </button>
+  </div>
+</div>
+<!-- .view task modal -->
+
+<!-- add task modal -->
+<div class="ui small modal" id="add-task">
+  <i class="close icon"></i>
+  <div class="header">
+    Add Task
+  </div>
+  <div class="content">
+    
+    <div class="ui form">
+      <div class="field">
+        <label>Assign To</label>
+        <select class="ui dropdown member-dropdown atask-member" ng-model="atask.Task.member_id" ng-options="member.member_id as member.name for member in project.Member">
+          <option value="">Select Member</option>
+          <option ng-repeat="member in selectMembers" value="{{ member.id }}">{{ member.name }}</option>
+        </select>
+      </div>
+      <div class="required field">
+        <label>Task Name</label>
+        <input type="text" placeholder="Task Name" class="required-pop" ng-model="atask.Task.name">
+        <div class="ui inverted custom popup">
+          This field is required.
+        </div>
+      </div>
+      <div class="field">
+        <label>Task Description</label>
+        <textarea type="text" placeholder="Description" ng-model="atask.Task.description"></textarea>
+      </div>
+      
+      <div class="field">
+        <label>Due Date</label>
+        <input type="date" placeholder="Due Date" ng-model="atask.Task.due_date">
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui red right labeled icon deny button">Cancel <i class="remove icon"></i></div>
+    <button class="ui green right labeled icon approve button">
+      Save Task<i class="checkmark icon"></i>
+    </button>
+  </div>
+</div>
+<!-- .add task modal -->
+
+
+<!-- add sub task modal -->
+<div class="ui small modal" id="add-sub-task">
+  <i class="close icon"></i>
+  <div class="header">
+    Add Sub Task <i><small>( {{ subtaskParent }} )</small></i>
+  </div>
+  <div class="content">
+    
+    <div class="ui form">
+      <div class="field">
+        <label>Assign To</label>
+        <select class="ui dropdown member-dropdown atask-member" ng-model="atask.Task.member_id" ng-options="member.member_id as member.name for member in project.Member">
+          <option value="">Select Member</option>
+          <option ng-repeat="member in selectMembers" value="{{ member.id }}">{{ member.name }}</option>
+        </select>
+      </div>
+      <div class="required field">
+        <label>Task Name</label>
+        <input type="text" placeholder="Task Name" class="required-pop" ng-model="atask.Task.name">
+        <div class="ui inverted custom popup">
+          This field is required.
+        </div>
+      </div>
+      <div class="field">
+        <label>Task Description</label>
+        <textarea type="text" placeholder="Description" ng-model="atask.Task.description"></textarea>
+      </div>
+      
+      <div class="field">
+        <label>Due Date</label>
+        <input type="date" placeholder="Due Date" ng-model="atask.Task.due_date">
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui red right labeled icon deny button">Cancel <i class="remove icon"></i></div>
+    <button class="ui green right labeled icon approve button">
+      Save Task<i class="checkmark icon"></i>
+    </button>
+  </div>
+</div>
+<!-- .add task modal -->

@@ -1,0 +1,65 @@
+<?php
+class ProjectsController extends AppController {
+
+  public $uses = ['Project'];
+  public $components = ['Paginator', 'RequestHandler'];
+
+  public function beforeFilter() {
+    parent::beforeFilter();
+    $this->RequestHandler->ext = 'json';
+  }
+  
+  public function index() {
+    $res = [
+      'ok'   => true,
+      'msg'  => 'index'
+    ];
+
+    $this->set(array(
+      'res'        => $res,
+      '_serialize' => 'res'
+    ));
+  }
+  
+  public function view($id = null) {
+    $res = [
+      'ok'  => true,
+      'msg' => 'view'
+    ];
+
+    $this->set(array(
+      'res'        => $res,
+      '_serialize' => 'res'
+    ));
+  }
+  
+  public function add() {
+    $res = [
+      'ok'  => true,
+      'msg' => 'add'
+    ];
+
+    $this->set(array(
+      'res'        => $res,
+      '_serialize' => 'res'
+    ));
+  }
+  
+  public function edit() {
+    
+  }
+  
+  public function delete() {
+    $res = [
+      'ok'  => true,
+      'msg' => 'msg'
+    ];
+
+    $this->set([
+      'response'   => $res,
+      '_serialize' => 'res'
+    ]);
+  }
+  
+  
+}

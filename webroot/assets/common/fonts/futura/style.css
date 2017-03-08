@@ -1,0 +1,29 @@
+@font-face {
+  font-family: 'Futura Light';
+  src: url('fonts/FuturaNewLight.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Futura Medium';
+  src: url('fonts/FuturaNewMedium.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Futura Book';
+  src: url('fonts/FuturaNewBook.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GothamPro';
+  src: url('fonts/GothamProReg.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+

@@ -1,0 +1,152 @@
+
+/* buttons */
+.btn {
+	font-family: 'Futura Book';
+	font-size: 16px;
+	padding: 12px 32px;
+}
+
+.btn.btn-sm {
+	font-size: 13px;
+	padding: 8px 24px;
+}
+
+.btn.btn-xs {
+	font-size: 11px;
+	padding: 4px 18px;
+}
+
+.btn-circle {
+  border-radius: 50px;
+}
+
+.btn-primary {
+	background: #3498db;
+	border: 1px solid #3498db;
+	box-shadow: inset 0px -2px 0px #2980b9;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+	background: #2980b9;
+	border: 1px solid #3498db;
+}
+
+.btn-success {
+	background: #2ecc71;
+	border: 1px solid #2ecc71;
+	box-shadow: inset 0px -2px 0px #27ae60;
+}
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
+	background: #27ae60;
+	border: 1px solid #27ae60;
+}
+
+.btn-danger {
+	background: #e74c3c;
+	border: 1px solid #e74c3c;
+	box-shadow: inset 0px -2px 0px #c0392b;
+}
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active {
+	background: #c0392b;
+	border: 1px solid #c0392b;
+}
+
+.btn-warning {
+	background: #e67e22;
+	border: 1px solid #e67e22;
+	box-shadow: inset 0px -2px 0px #d35400;
+}
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active {
+	background: #d35400;
+	border: 1px solid #d35400;
+}
+
+
+/* inputs */
+.form-control {
+	height: 48px;
+	font-size: 14px;
+	line-height: 14px;
+	padding: 12px 18px;
+	border: 2px solid #CDCDCD;
+	box-shadow: none;
+	font-family: 'GothamPro';
+}
+label {
+  font-weight: normal;
+  font-family: 'Futura Medium';
+}
+.form-control.circle {
+  border-radius: 50px;
+}
+.form-control:focus {
+	box-shadow: none;
+}
+.form-control.input-sm {
+	height: 36px;
+	font-size: 13px;
+	padding: 12px 18px;
+}
+.form-control.input-xs {
+	height: 32px;
+	font-size: 11px;
+	padding: 12px 18px;
+}
+.form-group.success .form-control {
+	border: 2px solid #2ecc71;
+}
+.form-group.success .form-control:focus {
+	box-shadow: none;
+}
+.form-group.danger .form-control {
+	border: 2px solid #e74c3c;
+}
+.form-group.danger .form-control:focus {
+	box-shadow: none;
+}
+.form-group.warning .form-control {
+	border: 2px solid #e67e22;
+}
+.form-group.warning .form-control:focus {
+	box-shadow: none;
+}
+
+/* tables */
+.table>thead>tr>th {
+	background: #f3f4f5;
+	padding-top: 28px;
+	padding-bottom: 18px;
+	border-bottom: 1px solid #e5e6e7;
+	font-family: 'Futura Medium';
+	font-size: 14px;
+	color: #688699;
+	letter-spacing: 1pt;
+	text-transform: uppercase;
+	
+}
+.table>tbody>tr>td {
+	padding: 18px 12px 12px 12px;
+	border-top: 1px solid #e5e6e7;
+	font-family: 'GothamPro';
+	font-size: 14px;
+	color: #868686;
+}
+
+.table>tbody>tr>td>a {
+  font-family: 'Futura Medium';
+  font-size: 14px;
+  color: #858585;
+  text-decoration: none;
+  border-bottom: 1px dotted #858585;
+}
+.table>tbody>tr>td>a:hover {
+  text-decoration: none;
+  border-bottom: none;
+}
