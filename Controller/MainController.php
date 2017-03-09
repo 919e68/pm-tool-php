@@ -2,7 +2,7 @@
 class MainController extends AppController {
 
   public $uses = ['User', 'Member'];
-  public $components = ['RequestHandler'];
+  public $components = ['RequestHandler', 'Thumbnail'];
 
   public function beforeFilter() {
     $this->Auth->allow('index', 'login', 'logout', 'auth', 'test', 'query');
@@ -66,6 +66,15 @@ class MainController extends AppController {
         'contain' => ['Attachment']
       ]);
 
+      $avatar = $this->Thumbnail->render('/uploads/attachments/' . $data['Attachment']['id'] . '/' . $data['Attachment']['filename'], [
+        'path'    => 'test', 
+        'width'   => 128, 
+        'height'  => 128, 
+        'quality' => 100,
+        'resize'  => 'crop', 
+        'cachePath' => 'attachments/' . $data['Attachment']['id']
+      ]);
+
       $member = [
         'user_id'    => (int) $userId,
         'member_id'  => (int) $data['Member']['id'],
@@ -74,11 +83,11 @@ class MainController extends AppController {
         'last_name'  => $data['Member']['last_name'],
         'contact_number' => $data['Member']['contact_number'],
         'city'    => $data['Member']['city'],
-        'country' => $data['Member']['country']
+        'country' => $data['Member']['country'],
+        'avatar'  => serverUrl() . $this->base . '/' . $avatar
       ];
 
       $response['data'] = $member;
-      $response['data'] = $data;
 
     } else {
       $response['ok'] = false;

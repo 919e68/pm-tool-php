@@ -39,5 +39,4 @@ class Member extends AppModel {
 
     return $projects;
   }
-
 }

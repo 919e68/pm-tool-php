@@ -56,3 +56,13 @@ function mkdirr($path) {
     }
   }
 }
+
+function serverUrl() {
+  $secureConnection = false;
+  if(isset($_SERVER['HTTPS']))
+    if ($_SERVER['HTTPS'] == "on")
+      $secureConnection = true;
+  $secureConnection = $secureConnection? 'https' : 'http';
+  return $secureConnection . '://'. $_SERVER['SERVER_NAME'];
+}
+

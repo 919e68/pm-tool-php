@@ -8,18 +8,30 @@ class Attachment extends AppModel {
     'Member'
   ];
 
-  public function upload($files) {
-    $result = null;
+  public function upload($files, $id = null) {
+    $result = $id;
 
     if (count($files) > 0) {
       $file = $files['image'];
       
       if (!empty($file['name'])) {
-        $this->save([
-          'name' => $file['name']
-        ]);
 
-        $id = $this->getLastInsertId();
+        $attachment = ['filename' => $file['name']];
+        if (!empty($id)) {
+          $oldAttachment = $this->find('first', [
+            'conditions' => ['Attachment.id' => $id]
+          ]);
+
+          if (!empty($oldAttachment)) {
+            unlink("uploads/attachments/$id/" . $oldAttachment['Attachment']['filename']);
+          }
+          
+          $attachment['id'] = $id;
+        }
+
+        $this->save($attachment);
+
+        if (empty($id)) $id = $this->getLastInsertId();
         $imagePath = "uploads/attachments/$id";
 
         if(!file_exists($imagePath)) mkdirr($imagePath);

@@ -4,7 +4,7 @@
   </div>
 
   <div class="user-info">
-    <img src="<?php echo $this->base ?>/assets/dummy/img/1.png">
+    <img ng-src="{{ member.avatar }}">
     <div class="name" ng-cloak>{{ member.first_name }} {{ member.last_name }}</div>
     <div class="email" ng-cloak>{{ member.email }}</div>
     <div class="action"><a href="#logout">signout</a></div>
