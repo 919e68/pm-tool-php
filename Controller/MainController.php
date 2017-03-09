@@ -58,7 +58,6 @@ class MainController extends AppController {
       $response['msg'] = 'user is currently logged in';
 
       $userId = $this->Session->read('Auth.User.id');
-
       $data = $this->Member->find('first', [
         'conditions' => [
           'Member.user_id' => $userId
@@ -66,8 +65,12 @@ class MainController extends AppController {
         'contain' => ['Attachment']
       ]);
 
-      $avatar = $this->Thumbnail->render('/uploads/attachments/' . $data['Attachment']['id'] . '/' . $data['Attachment']['filename'], [
-        'path'    => 'test', 
+      $this->Member->save([
+        'id'        => $data['Member']['id'],
+        'is_online' => true
+      ]);
+
+      $avatar = $this->Thumbnail->render('/uploads/attachments/' . $data['Attachment']['id'] . '/' . $data['Attachment']['filename'], [ 
         'width'   => 128, 
         'height'  => 128, 
         'quality' => 100,
@@ -87,7 +90,37 @@ class MainController extends AppController {
         'avatar'  => serverUrl() . $this->base . '/' . $avatar
       ];
 
-      $response['data'] = $member;
+      $onlineMembers = $this->Member->find('all', [
+        'conditions' => [
+          'Member.id !='     => $data['Member']['id'],
+          'Member.is_online' => true
+        ],
+        'contain' => ['Attachment']
+      ]);
+
+      foreach ($onlineMembers as $key => $onlineMember) {
+        $avatar = $this->Thumbnail->render('/uploads/attachments/' . $onlineMember['Attachment']['id'] . '/' . $onlineMember['Attachment']['filename'], [ 
+          'width'   => 128, 
+          'height'  => 128, 
+          'quality' => 100,
+          'resize'  => 'crop', 
+          'cachePath' => 'attachments/' . $onlineMember['Attachment']['id']
+        ]);
+
+        $onlineMembers[$key] = [
+          'id' => $onlineMember['Member']['id'],
+          'first_name' => $onlineMember['Member']['first_name'],
+          'last_name'  => $onlineMember['Member']['last_name'],
+          'city'       => $onlineMember['Member']['city'],
+          'country'    => $onlineMember['Member']['country'],
+          'avatar'     => serverUrl() . $this->base . '/' . $avatar
+        ];
+      }
+
+      $response['data'] = [
+        'profile'        => $member,
+        'online_members' => $onlineMembers
+      ];
 
     } else {
       $response['ok'] = false;

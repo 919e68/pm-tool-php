@@ -101,7 +101,6 @@ class MembersController extends AppController {
       ]);
 
       $avatar = $this->Thumbnail->render('/uploads/attachments/' . $member['Attachment']['id'] . '/' . $member['Attachment']['filename'], [
-        'path'    => 'test', 
         'width'   => 128, 
         'height'  => 128, 
         'quality' => 100,
