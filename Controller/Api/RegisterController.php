@@ -53,8 +53,6 @@ class RegisterController extends AppController {
 
     }
 
-    $res['test'] = isPresent($input, 'username');
-
     // response
     if (count($err) > 0) {
       $res['errors'] = $err;

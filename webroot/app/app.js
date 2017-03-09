@@ -7,9 +7,14 @@ app.config(function($urlRouterProvider, $locationProvider) {
 
 })
 
-function url(str) {
+function appUrl(str) {
   return base + str
 }
+
+function apiUrl(str) {
+  return api + str
+}
+
 function templateUrl(str) {
   return base + 'app/' + str
 }

@@ -1,7 +1,7 @@
 app.config(function($stateProvider) { 
   $stateProvider
     .state('projects', {
-      url: url('projects'),
+      url: appUrl('projects'),
       views: {
         '': {
           templateUrl: templateUrl('projects/_index.html'),

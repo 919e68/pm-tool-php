@@ -1,7 +1,7 @@
 <?php
 class MainController extends AppController {
 
-  public $uses = ['User'];
+  public $uses = ['User', 'Member'];
   public $components = ['RequestHandler'];
 
   public function beforeFilter() {
@@ -45,17 +45,47 @@ class MainController extends AppController {
     $this->autoRender = false;
     $this->RequestHandler->respondAs('json');
 
+    $response = [
+      'ok' => false,
+      'msg' => null,
+    ];
+
+    $ok = false;
+    $msg = null;
+
     if ($this->Auth->loggedIn()) {
-      return $this->redirect([
-        'controller' => 'main',
-        'action'     => 'index'
+      $response['ok'] = true;
+      $response['msg'] = 'user is currently logged in';
+
+      $userId = $this->Session->read('Auth.User.id');
+
+      $data = $this->Member->find('first', [
+        'conditions' => [
+          'Member.user_id' => $userId
+        ],
+        'contain' => ['Attachment']
       ]);
+
+      $member = [
+        'user_id'    => (int) $userId,
+        'member_id'  => (int) $data['Member']['id'],
+        'email'      => $this->Session->read('Auth.User.email'),
+        'first_name' => $data['Member']['first_name'],
+        'last_name'  => $data['Member']['last_name'],
+        'contact_number' => $data['Member']['contact_number'],
+        'city'    => $data['Member']['city'],
+        'country' => $data['Member']['country']
+      ];
+
+      $response['data'] = $member;
+      $response['data'] = $data;
+
+    } else {
+      $response['ok'] = false;
+      $response['msg'] = 'authentication failed';
     }
 
-    echo json_encode([
-      'ok'  => false,
-      'msg' => 'authentication failed'
-    ]);
+    echo json_encode($response);
   }
 
   public function test() {

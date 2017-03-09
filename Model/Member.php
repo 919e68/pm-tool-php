@@ -6,10 +6,16 @@ class Member extends AppModel {
 
   public $belongsTo = [
     'User',
-    'ProjectMember'
+    'ProjectMember',
+    'Attachment' => [
+      'foreignKey' => 'image_id'
+    ]
   ];
 
-  public $hasMany = ['TaskMember', 'TaskComment'];
+  public $hasMany = [
+    'TaskMember', 
+    'TaskComment'
+  ];
 
   public function projectList($id) {
     $datas = $this->ProjectMember->find('all', [

@@ -42,3 +42,17 @@ function isPresent($data, $index = '') {
 
   return $result;
 }
+
+function mkdirr($path) {
+  $folders = explode('/', $path);
+  $folderPath = '';
+
+  foreach ($folders as $key => $folder) {
+    $delimeter = $key > 0? '/' : '';
+    $folderPath .= $delimeter . $folder;
+
+    if(!file_exists($folderPath)) {
+      mkdir($folderPath);
+    }
+  }
+}

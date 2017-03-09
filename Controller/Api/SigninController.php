@@ -9,7 +9,6 @@ class SigninController extends AppController {
     $this->Auth->allow('add');
   }
 
-
   public function add() {
     $res = ['ok' => false];
     $err = [];

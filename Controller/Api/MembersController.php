@@ -40,10 +40,10 @@ class MembersController extends AppController {
       'data' => $members
     ];
 
-    $this->set(array(
+    $this->set([
       'res'        => $res,
       '_serialize' => 'res'
-    ));
+    ]);
   }
   
   public function view($id = null) {
@@ -64,14 +64,31 @@ class MembersController extends AppController {
       'msg' => 'add'
     ];
 
-    $this->set(array(
+    if ($this->request->is('post')) {
+
+    }
+
+    $this->set([
       'res'        => $res,
       '_serialize' => 'res'
-    ));
+    ]);
   }
-  
-  public function edit() {
-    
+
+
+  public function edit($id = null) {
+    $res = [
+      'ok'  => true,
+      'msg' => 'edit'
+    ];
+
+    if ($this->request->is('post')) {
+      $res['uploaded'] = $this->Member->Attachment->upload($_FILES);
+    }
+
+    $this->set([
+      'res'        => $res,
+      '_serialize' => 'res'
+    ]);
   }
   
   public function delete() {
