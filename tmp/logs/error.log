@@ -16458,3 +16458,21 @@ Request URL: /pm-tool/assets/common/angular/angular-resource.min.js.map
 Stack Trace:
 #0 C:\wamp\www\pm-tool\webroot\index.php(53): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
 #1 {main}
+2017-03-09 09:43:37 Error: [MissingControllerException] Controller class Controller could not be found.
+Exception Attributes: array (
+  'class' => 'Controller',
+  'plugin' => NULL,
+)
+Request URL: /pm-tool/asdqwe
+Stack Trace:
+#0 C:\wamp\www\pm-tool\webroot\index.php(53): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2017-03-09 09:58:59 Error: [MissingControllerException] Controller class Controller could not be found.
+Exception Attributes: array (
+  'class' => 'Controller',
+  'plugin' => NULL,
+)
+Request URL: /pm-tool/profile
+Stack Trace:
+#0 C:\wamp\www\pm-tool\webroot\index.php(53): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
